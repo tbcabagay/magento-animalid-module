@@ -28,10 +28,12 @@
                     photoImg.alt = 'Profile photo';
                     photoImg.src = response.photo;
 
-                    const photoDiv = $('#animalid-photo');
+                    const photoDiv = document.getElementById('animalid-photo');
                     if (photoDiv) {
-                        // photoDiv.empty().append(photoImg);
-                        photoDiv.html(photoImg);
+                        while (photoDiv.firstChild) {
+                            photoDiv.removeChild(photoDiv.firstChild);
+                        }
+                        photoDiv.appendChild(photoImg);
                     }
                 }
             );
