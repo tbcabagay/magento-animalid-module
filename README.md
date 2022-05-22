@@ -25,6 +25,8 @@ When the customer selects a photo, the change persists in the session storage. R
 ```
 <?php
 namespace Razoyo\AnimalProfile\Controller\Profile\Photo.php
+
+// Takes the data from the AJAX request. Throws an \Exception if the value is invalid. Then saves the value in the customer session.
 private function getSelectedAnimalIdType()
 {
     $param = $this->getRequest()->getParam('animalIdType');
@@ -48,8 +50,12 @@ private function getSelectedAnimalIdType()
     $this->customerSession->setAnimalidPhoto($param);
     return $photo;
 }
+```
 
+```
 namespace Razoyo\AnimalProfile\Block\Profile\View.php;
+
+// Gets the session value to be passed to the view object.
 public function getPhotoFromSession()
 {
     return $this->customerSession->getAnimalidPhoto() ?
