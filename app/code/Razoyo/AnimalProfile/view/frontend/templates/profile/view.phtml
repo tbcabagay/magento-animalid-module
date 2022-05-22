@@ -1,0 +1,27 @@
+<?php
+/**
+ * @var $block \Razoyo\AnimalProfile\Block\Profile\Photo
+ */
+?>
+<p><?= $block->getGreeting() ?></p>
+<div id="animalid-photo"></div>
+<script>
+    require(['jquery', 'domReady!'], function ($) {
+        return $.ajax({
+            url: '<?= $block->getPhotoUrl() ?>',
+            type: 'GET'
+        }).done(
+            function (response) {
+                console.log(response);
+                const photoImg = document.createElement('img'); 
+                photoImg.alt = 'Profile photo';
+                photoImg.src = response.photo;
+
+                const photoDiv = document.getElementById('animalid-photo');
+                if (photoDiv) {
+                    photoDiv.appendChild(photoImg);
+                }
+            }
+        );
+    });
+</script>
