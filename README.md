@@ -5,4 +5,15 @@ Magento 2 Animalid Module
 
 This is only the Magento 2 module which contains the dropdown list that allows a customer to change the animal photo.
 
-When the customer selects a photo, the change persists in the session storage.
+1. Cat
+    - ![cat]()
+2. Dog
+    - ![dog]()
+3. Llama
+    - ![llama]()
+4. Anteater
+    - ![anteater]()
+
+When the page initially loads, the default animal photo is the cat.
+
+When the customer selects a photo, the change persists in the session storage. Refreshing the page will display the previously selected animal photo.
