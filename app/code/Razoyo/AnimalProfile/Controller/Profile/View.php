@@ -27,10 +27,10 @@ class View extends \Magento\Framework\App\Action\Action
 
     public function __construct(
         Context $context,
-        Session $customerSession,
-        PageFactory $pageFactory
+        PageFactory $pageFactory,
+        Session $customerSession
     ) {
-        parent::__construct($context, $customerSession);
+        parent::__construct($context);
         $this->customerSession = $customerSession;
         $this->pageFactory = $pageFactory;
     }

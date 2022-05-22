@@ -38,5 +38,11 @@ class View extends \Magento\Framework\View\Element\Template
     {
         return $this->getUrl('animalid/profile/photo');
     }
+
+    public function getPhotoFromSession()
+    {
+        return $this->customerSession->getAnimalidPhoto() ?
+            $this->customerSession->getAnimalidPhoto() : 'cat';
+    }
 }
 

@@ -5,23 +5,44 @@
 ?>
 <p><?= $block->getGreeting() ?></p>
 <div id="animalid-photo"></div>
+<label for="animalid-photo-picker">
+    Change animal photo:
+    <select name="animalid-photo-picker" id="animalid-photo-picker">
+        <option value="cat" selected>Cat</option>
+        <option value="dog">Dog</option>
+        <option value="llama">Llama</option>
+        <option value="anteater">Anteater</option>
+    </select>
+</label>
 <script>
     require(['jquery', 'domReady!'], function ($) {
-        return $.ajax({
-            url: '<?= $block->getPhotoUrl() ?>',
-            type: 'GET'
-        }).done(
-            function (response) {
-                console.log(response);
-                const photoImg = document.createElement('img'); 
-                photoImg.alt = 'Profile photo';
-                photoImg.src = response.photo;
+        function loadAnimalidPhoto(type) {
+            return $.ajax({
+                url: '<?= $block->getPhotoUrl() ?>',
+                data: { animalIdType: type },
+                type: 'GET'
+            }).done(
+                function (response) {
+                    console.log(response);
+                    const photoImg = document.createElement('img'); 
+                    photoImg.alt = 'Profile photo';
+                    photoImg.src = response.photo;
 
-                const photoDiv = document.getElementById('animalid-photo');
-                if (photoDiv) {
-                    photoDiv.appendChild(photoImg);
+                    const photoDiv = $('#animalid-photo');
+                    if (photoDiv) {
+                        // photoDiv.empty().append(photoImg);
+                        photoDiv.html(photoImg);
+                    }
                 }
-            }
-        );
+            );
+        }
+        const pickerOpt = $('#animalid-photo-picker');
+        pickerOpt.val('<?= $block->getPhotoFromSession() ?>');
+        loadAnimalidPhoto('<?= $block->getPhotoFromSession() ?>');
+        pickerOpt.on('change', function() {
+            const opt = $(this).val();
+            console.log(opt);
+            return loadAnimalidPhoto(opt);
+        });
     });
 </script>
