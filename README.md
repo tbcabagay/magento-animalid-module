@@ -1,7 +1,8 @@
 # magento-animalid-module
 Magento 2 Animalid Module
 
-![banner](https://raw.githubusercontent.com/tbcabagay/magento-animalid-module/0a6cda1544e48255db4d5e6642d72ddab413cd32/banner.png)
+## Screencast
+[![Watch the screencast](https://raw.githubusercontent.com/tbcabagay/magento-animalid-module/0a6cda1544e48255db4d5e6642d72ddab413cd32/banner.png)](https://youtu.be/VHRzQG0glV8)
 
 ## The test requirements
 This is only the Magento 2 module which contains the dropdown list that allows a customer to change the animal photo.
