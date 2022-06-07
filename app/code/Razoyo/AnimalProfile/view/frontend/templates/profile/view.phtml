@@ -11,10 +11,9 @@
             Change animal photo:
         </label>
         <select name="animalid-photo-picker" id="animalid-photo-picker">
-            <option value="cat" selected>Cat</option>
-            <option value="dog">Dog</option>
-            <option value="llama">Llama</option>
-            <option value="anteater">Anteater</option>
+            <?php foreach ($this->getAnimalList() as $key => $value): ?>
+            <option value="<?= $key ?>"><?= $value ?></option>
+            <?php endforeach; ?>
         </select>
     </div>
 </form>

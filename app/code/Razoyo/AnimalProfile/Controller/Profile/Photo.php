@@ -17,6 +17,7 @@ use Magento\Framework\View\Result\PageFactory;
 use Magento\Customer\Model\Session;
 use Psr\Log\LoggerInterface;
 use Razoyo\AnimalProfile\Animal;
+use Razoyo\AnimalProfile\Animal\AnimalHandler;
 
 class Photo extends \Magento\Framework\App\Action\Action implements HttpGetActionInterface
 {
@@ -43,6 +44,11 @@ class Photo extends \Magento\Framework\App\Action\Action implements HttpGetActio
     protected $http;
 
     /**
+     * @var AnimalHandler
+     */
+    protected $animalHandler;
+
+    /**
      * Constructor
      *
      * @param PageFactory $resultPageFactory
@@ -56,7 +62,8 @@ class Photo extends \Magento\Framework\App\Action\Action implements HttpGetActio
         Json $json,
         LoggerInterface $logger,
         Http $http,
-        Session $customerSession
+        Session $customerSession,
+        AnimalHandler $animalHandler
     ) {
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
@@ -64,6 +71,7 @@ class Photo extends \Magento\Framework\App\Action\Action implements HttpGetActio
         $this->logger = $logger;
         $this->http = $http;
         $this->customerSession = $customerSession;
+        $this->animalHandler = $animalHandler;
     }
 
     /**
@@ -100,26 +108,14 @@ class Photo extends \Magento\Framework\App\Action\Action implements HttpGetActio
 
     private function getSelectedAnimalIdType()
     {
-        $param = $this->getRequest()->getParam('animalIdType');
-        switch ($param) {
-            case 'cat':
-                $photo = new Animal\Cat();
-                break;
-            case 'dog':
-                $photo = new Animal\Dog();
-                break;
-            case 'llama':
-                $photo = new Animal\Llama();
-                break;
-            case 'anteater':
-                $photo = new Animal\Anteater();
-                break;
-            default:
-                throw new \Exception('The animalid type is invalid.');
-                break;
+        $animal = $this->getRequest()->getParam('animalIdType');
+        $animalType = $this->animalHandler->getAnimal($animal);
+        if ($animalType === false) {
+            throw new \Exception('The animalid type is invalid.');
         }
-        $this->customerSession->setAnimalidPhoto($param);
-        return $photo;
+
+        $this->customerSession->setAnimalidPhoto($animal);
+        return $animalType;
     }
 }
 

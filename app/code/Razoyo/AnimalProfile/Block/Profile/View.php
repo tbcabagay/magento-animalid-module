@@ -15,6 +15,11 @@ class View extends \Magento\Framework\View\Element\Template
     private $customerSession;
 
     /**
+     * @var AnimalHandler
+     */
+    protected $animalHandler;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\View\Element\Template\Context  $context
@@ -23,10 +28,12 @@ class View extends \Magento\Framework\View\Element\Template
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Customer\Model\Session $customerSession,
+        \Razoyo\AnimalProfile\Animal\AnimalHandler $animalHandler,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->customerSession = $customerSession;
+        $this->animalHandler = $animalHandler;
     }
 
     public function getGreeting()
@@ -42,7 +49,12 @@ class View extends \Magento\Framework\View\Element\Template
     public function getPhotoFromSession()
     {
         return $this->customerSession->getAnimalidPhoto() ?
-            $this->customerSession->getAnimalidPhoto() : 'cat';
+            $this->customerSession->getAnimalidPhoto() : $this->animalHandler->getDefaultAnimal();
+    }
+
+    public function getAnimalList()
+    {
+        return $this->animalHandler->getAnimalList();
     }
 }
 
